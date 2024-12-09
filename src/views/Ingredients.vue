@@ -10,7 +10,7 @@ const ingredients = ref([]);
 onMounted(() => {
   api.get('list.php?i=list')
     .then(({ data }) => {
-      ingredients.value = data.meals || []; // Handle null response gracefully
+      ingredients.value = data.meals;
     });
 });
 
@@ -25,15 +25,17 @@ const searchIngredients = computed(() => {
 
 <template>
   <div class="p-8 pb-0 text-orange-500">
-    <h1 class="text-4xl font-bold mb-4">Search Meals by Ingredients</h1>
+    <h1 class="text-4xl font-bold mb-4">Search Meals By Ingredients</h1>
   </div>
+
+  <!-- {{ ingredients }} -->
 
   <div class="p-10">
     <input
       type="text"
       v-model="keyword"
       class="rounded border-2 border-gray-200 w-full bg-white mb-5"
-      placeholder="Enter Ingredient Name"
+      placeholder="Enter ingredient name"
     />
 
     <div class="grid grid-cols-4 gap-5">
@@ -45,10 +47,9 @@ const searchIngredients = computed(() => {
       >
         <img
           :src="`http://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`"
-          alt="Ingredient Image"
-          class="mb-2"
+          alt="Ingredient image"
         />
-        <h3 class="text-2xl font-bold">{{ ingredient.strIngredient }}</h3>
+        <h3 class="text-2xl font-bold mb-2">{{ ingredient.strIngredient }}</h3>
       </router-link>
     </div>
   </div>
