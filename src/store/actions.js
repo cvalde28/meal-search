@@ -1,24 +1,33 @@
 import useAPI from "@/composables/useAPI";
 
-const { api } = useAPI()
+const { api } = useAPI();
 
 export function searchMeals({ commit }, keyword) {
     api.get(`search.php?s=${keyword}`)
         .then(({ data }) => {
-        commit('setSearchedMeals', data.meals)
-    })
+            commit('setSearchedMeals', data.meals);
+        })
+        .catch((error) => {
+            console.error("Error fetching meals:", error);
+        });
 }
 
-export function searchMealsByLetter((commit), letter) {
+export function searchMealsByLetter(commit, letter) {
     api.get(`search.php?f=${letter}`)
         .then(({ data }) => {
-        commit('setMealsByLetter', data.meals)
-    })
+            commit('setMealsByLetter', data.meals);
+        })
+        .catch((error) => {
+            console.error("Error fetching meals by letter:", error);
+        });
 }
 
 export function searchMealsByIngredient({ commit }, ingredient) {
     api.get(`filter.php?i=${ingredient}`)
         .then(({ data }) => {
-        commit('setMealsByIngredient', data.meals)
-    })
+            commit('setMealsByIngredient', data.meals);
+        })
+        .catch((error) => {
+            console.error("Error fetching meals by ingredient:", error);
+        });
 }
